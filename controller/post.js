@@ -41,7 +41,7 @@ export const getAllPost = async (req, res) => {
     if (!getAllPost[0]) {
       res.json({ result: false, message: '등록된 게시글이 없습니다.' });
     }
-    res.json({ result: true, data: getAllPost });
+    res.json({ result: true, data: getAllPost, message: '게시글 전체 조회에 성공했습니다.' });
   } catch (error) {
     res.json({ result: false, error: error.message });
   }
@@ -51,8 +51,31 @@ export const getAllPost = async (req, res) => {
 export const getOnePost = async (req, res) => {
   try {
     const { id } = req.body;
-    const getOnePostQuery = ``;
-    const 
+    const getOnePostQuery = `SELECT * FROM posts WHERE id = ?`;
+    const getOnePost = await sequelize.query(getOnePostQuery, {
+      type: QueryTypes.SELECT,
+      replacements: [id],
+    });
+    const findPost = getOnePost[0];
+    if (!findPost) {
+      res.json({ result: false, message: '존재하지 않는 게시글입니다.' });
+    }
+
+    res.json({ result: true, data: findPost, message: `index: ${id}의 게시글을 가져왔습니다.` });
+  } catch (error) {
+    res.json({ result: false, error: error.message });
+  }
+};
+
+// 게시글 수정 및 삭제
+export const updatePost = async (req, res) => {
+  try {
+    const { id, userId, postTitle, postContent, postStatus } = req.body;
+    const updatePostQuery = `UPDATE posts SET postTitle = ?, postContent = ?, postStatus = ? WHERE id = ?`;
+    const updatePost = await sequelize.query(updatePostQuery, {
+      type: QueryTypes.UPDATE,
+      replacements: [postTitle, postContent, postStatus, id],
+    });
   } catch (error) {
     res.json({ result: false, error: error.message });
   }
