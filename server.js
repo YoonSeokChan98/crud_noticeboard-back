@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 
 import db from './model/index.js';
 import userRouter from './router/user.js';
+import postRouter from './router/post.js';
 
 dotenv.config();
 
@@ -18,7 +19,7 @@ app.get('/', (req, res) => {
 
 // API 라우터
 app.use('/api/user', userRouter);
-app.use('/api/user', userRouter);
+app.use('/api/post', postRouter);
 
 db.sequelize
   // alter: true -> 컬럼 변경만 적용 // 예) 실서비스 환경

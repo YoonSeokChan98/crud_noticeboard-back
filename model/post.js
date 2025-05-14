@@ -1,6 +1,5 @@
 import { DataTypes } from 'sequelize';
 
-// post 테이블 컬럼 수정하기
 const PostModel = (sequelize) => {
   const Post = sequelize.define('posts', {
     id: {
@@ -9,22 +8,22 @@ const PostModel = (sequelize) => {
       primaryKey: true,
       autoIncrement: true,
     },
-    userName: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
     userId: {
-      type: DataTypes.STRING,
-      allowNull: true,
+      type: DataTypes.INTEGER,
+      allowNull: false,
     },
-    userPassword: {
+    postTitle: {
       type: DataTypes.STRING,
-      allowNull: true,
+      allowNull: false,
     },
-    userStatus: {
+    postContent: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    postStatus: {
       type: DataTypes.ENUM('active', 'inactive'),
       defaultValue: 'active',
-      allowNull: true,
+      allowNull: false,
     },
   });
   return Post;

@@ -22,12 +22,12 @@ dotenv.config();
 // 회원가입
 export const signup = async (req, res) => {
   try {
-    const { userName, userId, userPassword } = req.body;
+    const { userName, userSocialId, userPassword } = req.body;
 
-    const findUserQuery = `SELECT * FROM users WHERE userId = ?`;
+    const findUserQuery = `SELECT * FROM users WHERE userSocialId = ?`;
     const findUser = await sequelize.query(findUserQuery, {
       type: QueryTypes.SELECT,
-      replacements: [userId],
+      replacements: [userSocialId],
     });
 
     const user = findUser[0];
@@ -36,12 +36,12 @@ export const signup = async (req, res) => {
     } else {
       const passwordEncryption = await bcrypt.hash(userPassword, 10);
 
-      const createUserQuery = `INSERT INTO users (userName, userId, userPassword, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?)`;
+      const createUserQuery = `INSERT INTO users (userName, userSocialId, userPassword, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?)`;
       const now = new Date();
       const newUserName = userName ? userName : `USER-${crypto.randomBytes(6).toString('hex')}`;
       const createUser = await sequelize.query(createUserQuery, {
         type: QueryTypes.INSERT,
-        replacements: [newUserName, userId, passwordEncryption, now, now],
+        replacements: [newUserName, userSocialId, passwordEncryption, now, now],
       });
 
       res.json({ result: true, data: createUser, message: '회원가입 성공' });
@@ -54,11 +54,11 @@ export const signup = async (req, res) => {
 // 로그인
 export const login = async (req, res) => {
   try {
-    const { userId, userPassword } = req.body;
-    const findUserQuery = `SELECT * FROM users WHERE userId = ? AND userStatus = 'active'`;
+    const { userSocialId, userPassword } = req.body;
+    const findUserQuery = `SELECT * FROM users WHERE userSocialId = ? AND userStatus = 'active'`;
     const findUser = await sequelize.query(findUserQuery, {
       type: QueryTypes.SELECT,
-      replacements: [userId],
+      replacements: [userSocialId],
     });
     const user = findUser[0];
     if (user) {

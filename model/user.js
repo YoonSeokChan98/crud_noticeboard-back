@@ -12,18 +12,18 @@ const UserModel = (sequelize) => {
       type: DataTypes.STRING,
       allowNull: true,
     },
-    userId: {
+    userSocialId: {
       type: DataTypes.STRING,
-      allowNull: true,
+      allowNull: false,
     },
     userPassword: {
       type: DataTypes.STRING,
-      allowNull: true,
+      allowNull: false,
     },
     userStatus: {
       type: DataTypes.ENUM('active', 'inactive'),
       defaultValue: 'active',
-      allowNull: true,
+      allowNull: false,
     },
   });
   return User;
