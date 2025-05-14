@@ -1,7 +1,8 @@
 import { DataTypes } from 'sequelize';
 
-const UserModel = (sequelize) => {
-  const User = sequelize.define('users', {
+// post 테이블 컬럼 수정하기
+const PostModel = (sequelize) => {
+  const Post = sequelize.define('posts', {
     id: {
       type: DataTypes.INTEGER,
       allowNull: false,
@@ -26,7 +27,7 @@ const UserModel = (sequelize) => {
       allowNull: true,
     },
   });
-  return User;
+  return Post;
 };
 
-export default UserModel;
+export default PostModel;

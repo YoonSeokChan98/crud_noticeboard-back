@@ -82,3 +82,5 @@ export const login = async (req, res) => {
     res.json({ result: false, error: error.message });
   }
 };
+
+// 유저 조회

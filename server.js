@@ -18,6 +18,7 @@ app.get('/', (req, res) => {
 
 // API 라우터
 app.use('/api/user', userRouter);
+app.use('/api/user', userRouter);
 
 db.sequelize
   // alter: true -> 컬럼 변경만 적용 // 예) 실서비스 환경
