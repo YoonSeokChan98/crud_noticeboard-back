@@ -1,5 +1,6 @@
 import express from 'express';
 import dotenv from 'dotenv';
+import cors from 'cors';
 
 import db from './model/index.js';
 import userRouter from './router/user.js';
@@ -10,7 +11,13 @@ dotenv.config();
 const app = express();
 const PORT = 4000;
 
+const corsOptions = {
+  origin: 'http://localhost:3000',
+  credentials: true,
+};
+
 app.use(express.json());
+app.use(cors());
 
 // 서버 연결 테스트용
 app.get('/', (req, res) => {
