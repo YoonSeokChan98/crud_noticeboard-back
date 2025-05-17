@@ -84,3 +84,26 @@ export const login = async (req, res) => {
 };
 
 // 유저 조회
+export const getUser = async (req, res) => {
+  try {
+    const { userSocialId } = req.query;
+    const findUserQuery = `SELECT * FROM users WHERE userSocialId = ? AND userStatus = 'active'`;
+    const findUser = await sequelize.query(findUserQuery, {
+      type: QueryTypes.SELECT,
+      replacements: [userSocialId],
+    });
+
+    const userName = findUser[0].userName;
+    const userPid = findUser[0].id;
+    const userId = findUser[0].userSocialId;
+    const userData = { userPid, userName, userId };
+
+    if (userData) {
+      res.json({ result: true, data: userData });
+    } else {
+      res.json({ result: false, message: '가입된 회원이 아니거나 탈퇴한 회원입니다.' });
+    }
+  } catch (error) {
+    res.json({ result: false, error: error.message });
+  }
+};

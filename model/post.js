@@ -8,8 +8,8 @@ const PostModel = (sequelize) => {
       primaryKey: true,
       autoIncrement: true,
     },
-    userId: {
-      type: DataTypes.INTEGER,
+    userSocialId: {
+      type: DataTypes.STRING,
       allowNull: false,
     },
     postTitle: {
