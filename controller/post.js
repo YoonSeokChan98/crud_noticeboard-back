@@ -76,8 +76,12 @@ export const updatePost = async (req, res) => {
       type: QueryTypes.UPDATE,
       replacements: [postTitle, postContent, id],
     });
-    console.log('🚀 ~ updatePost ~ updatePost:', updatePost);
-    res.json({ result: true, message: '게시글 수정에 성공했습니다.' });
+    const getOnePostQuery = `SELECT * FROM posts WHERE id = ?`;
+    const getOnePost = await sequelize.query(getOnePostQuery, {
+      type: QueryTypes.SELECT,
+      replacements: [id],
+    });
+    res.json({ result: true,data: getOnePost, message: '게시글 수정에 성공했습니다.' });
   } catch (error) {
     res.json({ result: false, error: error.message });
   }
